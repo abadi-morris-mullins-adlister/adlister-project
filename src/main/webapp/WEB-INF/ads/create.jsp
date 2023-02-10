@@ -30,5 +30,10 @@
             <input type="submit" class="btn btn-block btn-primary">
         </form>
     </div>
+
+
+
+<jsp:include page="/WEB-INF/partials/footer.jsp" />
+
 </body>
 </html>
