@@ -21,7 +21,6 @@ public class MySQLUsersDao implements Users {
         }
     }
 
-
     @Override
     public User findByUsername(String username) {
         String query = "SELECT * FROM users WHERE username = ? LIMIT 1";
@@ -61,9 +60,9 @@ public class MySQLUsersDao implements Users {
                 rs.getLong("id"),
                 rs.getString("username"),
                 rs.getString("email"),
-                rs.getString("password")
-//                rs.getString("imgURL"),
-//                rs.getBoolean("isAdmin")
+                rs.getString("password"),
+                rs.getString("imgURL"),
+                rs.getBoolean("isAdmin")
         );
     }
 

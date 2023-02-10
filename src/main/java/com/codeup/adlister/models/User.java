@@ -7,12 +7,9 @@ public class User {
     private String username;
     private String email;
     private String password;
-
     private String imgURL;
-
     private boolean isAdmin;
-
-    public User() {}
+    public User() {};
 
     public User(String username, String email, String password) {
         this.username = username;
@@ -20,14 +17,13 @@ public class User {
         setPassword(password);
     }
 
-    public User(long id, String username, String email, String password) {
+    public User(long id, String username, String email, String password, String imgURL, boolean isAdmin) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
-    }
-
-    public User(long id, String username, String email, String password, String imgURL) {
+        this.imgURL = imgURL;
+        this.isAdmin = isAdmin;
     }
 
     public long getId() {
