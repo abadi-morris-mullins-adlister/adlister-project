@@ -1,5 +1,6 @@
-USE
-adlister_db;
+CREATE DATABASE IF NOT EXISTS adlister_db;
+
+USE adlister_db;
 
 DROP TABLE IF EXISTS ads;
 DROP TABLE IF EXISTS users;
@@ -23,7 +24,7 @@ CREATE TABLE ads
     description TEXT         NOT NULL,
     imgURL      VARCHAR(255) NOT NULL,
     date_created(DATETIME),
-    price( double),
+    price(double),
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
         ON DELETE CASCADE
