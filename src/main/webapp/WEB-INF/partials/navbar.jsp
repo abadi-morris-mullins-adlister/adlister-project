@@ -6,8 +6,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav md-lg-0">
-                <li class="nav-item"><a class="nav-link" href="ads">Browse All</a></li>
-                <li class="nav-item"><a class="nav-link" href="${sessionScope.user == null ? "login" : "ads/create"}">Create a Listing</a></li>
+                <li class="nav-item"><a class="nav-link" href="/ads">Browse All</a></li>
+                <li class="nav-item"><a class="nav-link" href="${sessionScope.user == null ? "login" : "/ads/create"}">Create a Listing</a></li>
             </ul>
             <div class="navbar-nav ms-auto me-auto align-items-center">
                 <form method="POST" action="/search" class="d-flex mb-0" role="search">
@@ -17,6 +17,7 @@
             </div>
             <ul class="navbar-nav justify-content-end ms-5 md-lg-0">
                 <li class="nav-item"><a class="nav-link btn btn-primary" style="color: white;" href="${sessionScope.user == null ? "login" : "logout"}">${sessionScope.user == null ? "Log In" : "Log Out"}</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary ${sessionScope.user == null ? "d-none" : "ms-1"}" style="color: white;" href="${sessionScope.user == null ? "" : "/profile"}">${sessionScope.user.username}</a></li>
             </ul>
         </div>
     </div>
