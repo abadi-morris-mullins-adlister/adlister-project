@@ -39,6 +39,24 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
+    public List<Ad> searchByTerm(String searchTerm) {
+        try {
+            String searchQuery = "SELECT * FROM ads where title LIKE ? OR description LIKE ?";
+            PreparedStatement stmt = connection.prepareStatement(searchQuery, Statement.RETURN_GENERATED_KEYS);
+
+            String formattedSearchTerm = "%" + searchTerm + "%";
+            stmt.setString(1, formattedSearchTerm);
+            stmt.setString(2, formattedSearchTerm);
+
+            System.out.println(stmt);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all ads.", e);
+        }
+    }
+
+    @Override
     public Long insert(Ad ad) {
         try {
             String insertQuery = "INSERT INTO ads(user_id, title, description, imgURL, date_created, price) VALUES (?, ?, ?, ?, ?, ?)";
@@ -76,5 +94,13 @@ public class MySQLAdsDao implements Ads {
             ads.add(extractAd(rs));
         }
         return ads;
+    }
+
+
+    public static void main(String[] args) {
+        MySQLAdsDao test = new MySQLAdsDao(new Config());
+        System.out.println(test.searchByTerm("hotdog"));
+//        System.out.println(test.all());
+
     }
 }
