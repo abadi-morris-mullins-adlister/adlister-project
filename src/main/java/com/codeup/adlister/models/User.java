@@ -8,6 +8,10 @@ public class User {
     private String email;
     private String password;
 
+    private String imgURL;
+
+    private boolean isAdmin;
+
     public User() {}
 
     public User(String username, String email, String password) {
@@ -53,5 +57,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = Password.hash(password);
+    }
+
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
