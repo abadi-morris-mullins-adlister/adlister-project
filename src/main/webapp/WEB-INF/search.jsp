@@ -10,7 +10,7 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
 <div class="row flex-column">
-    <h1 class="text-center">Showing search results for ${searchTerm} (${numberOfResult})</h1>
+    <h1 class="text-center">Showing search results for ${param.searchTerm} (${searchResult})</h1>
 
     <c:forEach var="ad" items="${ads}">
         <div class="col-4 d-flex flex-column">

@@ -15,6 +15,8 @@ public class SearchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String searchTerm = request.getParameter("searchTerm");
         request.setAttribute("ads", DaoFactory.getAdsDao().searchByTerm(searchTerm));
+        int searchResults = DaoFactory.getAdsDao().searchByTerm(searchTerm).size();
+        request.setAttribute("searchResult", searchResults);
         request.getRequestDispatcher("/WEB-INF/search.jsp").forward(request, response);
     }
 }
