@@ -27,6 +27,9 @@ public class User {
         this.password = password;
     }
 
+    public User(long id, String username, String email, String password, String imgURL) {
+    }
+
     public long getId() {
         return id;
     }
