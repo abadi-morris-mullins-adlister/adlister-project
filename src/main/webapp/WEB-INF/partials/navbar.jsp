@@ -4,10 +4,12 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="/ads">Adlister</a>
         </div>
+        <ul class="nav navbar-nav navbar-left">
+            <li><a href="ads/index">Browse All</a></li>
+            <li><a href="${sessionScope.user == null ? "login" : "ads/create"}">Create a Listing</a></li>
+        </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login">Login</a></li>
-            <li><a href="/logout">Logout</a></li>
+            <li><a href="${sessionScope.user == null ? "login" : "logout"}">${sessionScope.user == null ? "Log In" : "Log Out"}</a></li>
         </ul>
     </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
 </nav>
