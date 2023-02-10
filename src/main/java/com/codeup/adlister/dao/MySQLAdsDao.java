@@ -47,7 +47,6 @@ public class MySQLAdsDao implements Ads {
             stmt.setString(2, ad.getTitle());
             stmt.setString(3, ad.getDescription());
             stmt.setString(4, ad.getImgURL());
-//            stmt.setDate(5, (Date) ad.getDate_created());
             stmt.setDate(5, new java.sql.Date(ad.getDate_created().getTime()));
             stmt.setDouble(6, ad.getPrice());
             stmt.executeUpdate();
