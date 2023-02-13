@@ -8,28 +8,34 @@
 </head>
 <body>
 
-    <jsp:include page="/WEB-INF/partials/navbar.jsp"/>
+<jsp:include page="/WEB-INF/partials/navbar.jsp"/>
 
-    <div class="container m-2">
-        <h1>${ad.title}</h1>
+<div class="container">
+    <h1>${ad.title}</h1>
 
-        <img src="${ad.imgURL}" class="rounded float-start img-thumbnail me-3 w-50" alt="${ad.title}">
-
-        <div>
-            <h3>Product Overview</h3>
-            <p>Title: <span id="product-title">${ad.title}</span></p>
-            <p>Date Listed: <span id="date-created">${ad.date_created}</span></p>
-            <p>Price: <span id="price">$${ad.price}0</span></p>
-            <p>Description: <span id="description">${ad.description}</span></p>
+    <img src="${ad.imgURL}" class="rounded img-thumbnail float-start w-25 me-2" alt="${ad.title}">
+    <div class="card" style="width: 70%;">
+        <div class="card-header">
+            Product Details
         </div>
-        <div class="mt-3">
-            <h3>Interested?</h3>
-            <p>Seller: <span id="seller">${user.getUsername()}</span></p>
-            <p>Contact Info: <span id="contact">${user.getEmail()}</span></p>
+        <div class="card-body">
+            <p><strong>Title: </strong><span id="product-title">${ad.title}</span></p>
+            <p><strong>Date Listed: </strong><span id="date-created">${ad.date_created}</span></p>
+            <p><strong>Price: </strong><span id="price">$${ad.price}0</span></p>
+            <p><strong>Description: </strong><span id="description">${ad.description}</span></p>
+        </div>
+        <div class="card-header" style="border-top: 1px solid lightgrey;">
+            Purchase Info
+        </div>
+        <div class="card-body">
+            <p><strong>Seller: </strong><span id="seller">${user.getUsername()}</span></p>
+            <p><strong>Contact Info: </strong><span id="contact">${user.getEmail()}</span></p>
         </div>
     </div>
 
-    <jsp:include page="/WEB-INF/partials/footer.jsp"/>
+</div>
+
+<jsp:include page="/WEB-INF/partials/footer.jsp"/>
 
 </body>
 </html>
