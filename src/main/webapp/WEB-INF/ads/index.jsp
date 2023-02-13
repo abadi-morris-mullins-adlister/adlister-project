@@ -13,13 +13,13 @@
 
     <h1>Here are all the ads!</h1>
 
-    <div class="row justify-content-evenly">
+    <div class="row">
         <c:forEach var="ad" items="${ads}">
-            <div class="card p-0" style="width: 18rem;">
-                <img src="${ad.imgURL}" class="card-img-top" alt="${ad.title}">
-                <div class="card-body">
+            <div class="card p-0 m-1" style="width: 18rem; height: 25rem;">
+                <img src="${ad.imgURL}" class="card-img-top img-100" style="object-fit: fill; height: 17rem;" alt="${ad.title}">
+                <div class="card-body bottom" style="height: 8rem; border-top: 1px solid lightgrey;">
                     <h5 class="card-title">${ad.title}</h5>
-                    <p class="card-text">${ad.description}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">$${ad.price}0</h6>
                     <a href="/product?id=${ad.id}" class="btn btn-primary">More Info</a>
                 </div>
             </div>
