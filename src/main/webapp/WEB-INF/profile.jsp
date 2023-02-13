@@ -38,6 +38,8 @@
                     <h5 class="card-title">${ad.title}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">$${ad.price}0</h6>
                     <a href="/product?id=${ad.id}" class="btn btn-primary">More Info</a>
+                    <a href="/ads/edit?id=${ad.id}" class="btn btn-primary">Edit</a>
+
                 </div>
             </div>
         </c:forEach>
