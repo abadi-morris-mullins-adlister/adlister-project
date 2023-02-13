@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface Users {
     User findByUsername(String username);
+    User findByUserID(long userID);
     Long insert(User user);
+    Long updateUser(String username, String imgURL, String email, User user);
 }

@@ -69,6 +69,30 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    public Ad searchByAdId(long adID) {
+        try {
+            String searchQuery = "SELECT * FROM ads where id = ?";
+            PreparedStatement stmt = connection.prepareStatement(searchQuery, Statement.RETURN_GENERATED_KEYS);
+
+            long formattedSearchTerm = adID;
+            stmt.setLong(1, formattedSearchTerm);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+
+            return new Ad(
+                    rs.getLong("id"),
+                    rs.getLong("user_id"),
+                    rs.getString("title"),
+                    rs.getString("description"),
+                    rs.getString("imgURL"),
+                    rs.getDate("date_created"),
+                    rs.getDouble("price")
+            );
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all ads.", e);
+        }
+    }
+
     @Override
     public Long insert(Ad ad) {
         try {
@@ -107,13 +131,5 @@ public class MySQLAdsDao implements Ads {
             ads.add(extractAd(rs));
         }
         return ads;
-    }
-
-
-    public static void main(String[] args) {
-        MySQLAdsDao test = new MySQLAdsDao(new Config());
-        System.out.println(test.searchByTerm("hotdog"));
-//        System.out.println(test.all());
-
     }
 }

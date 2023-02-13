@@ -33,6 +33,17 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    public User findByUserID(long userID) {
+        String query = "SELECT * FROM users WHERE id = ? LIMIT 1";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, String.valueOf(userID));
+            return extractUser(stmt.executeQuery());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding a user by their username", e);
+        }
+    }
+
     @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password, imgURL, isAdmin) VALUES (?, ?, ?, ?, ?)";
@@ -64,6 +75,23 @@ public class MySQLUsersDao implements Users {
                 rs.getString("imgURL"),
                 rs.getBoolean("isAdmin")
         );
+    }
+
+    public Long updateUser(String username, String imgURL, String email, User user) {
+        String query = "UPDATE users SET username = ?, imgURL = ?, email = ? WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1,username);
+            stmt.setString(2, imgURL);
+            stmt.setString(3,email);
+            stmt.setLong(4, user.getId());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating the user", e);
+        }
+        return null;
     }
 
 }

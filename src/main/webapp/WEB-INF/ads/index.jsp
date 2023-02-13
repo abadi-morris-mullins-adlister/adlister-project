@@ -15,12 +15,12 @@
 
     <div class="row justify-content-evenly">
         <c:forEach var="ad" items="${ads}">
-            <div class="card p-0" style="width: 18rem;" id="${ad.id}">
+            <div class="card p-0" style="width: 18rem;">
                 <img src="${ad.imgURL}" class="card-img-top" alt="${ad.title}">
                 <div class="card-body">
                     <h5 class="card-title">${ad.title}</h5>
                     <p class="card-text">${ad.description}</p>
-                    <a href="/product" class="btn btn-primary">More Info</a>
+                    <a href="/product?id=${ad.id}" class="btn btn-primary">More Info</a>
                 </div>
             </div>
         </c:forEach>

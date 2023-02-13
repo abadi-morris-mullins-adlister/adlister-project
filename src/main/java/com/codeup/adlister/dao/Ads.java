@@ -10,6 +10,8 @@ public interface Ads {
 
     List<Ad> searchByUserId(long userID);
 
+    Ad searchByAdId(long adID);
+
     // insert a new ad and return the new ad's id
     Long insert(Ad ad);
 

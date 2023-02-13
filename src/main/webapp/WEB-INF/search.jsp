@@ -12,18 +12,19 @@
 <div class="row flex-column">
     <h1 class="text-center">Showing search results for ${param.searchTerm} (${searchResult})</h1>
 
-    <c:forEach var="ad" items="${ads}">
-        <div class="col-4 d-flex flex-column">
-            <h2>${ad.title}</h2>
-            <p>${ad.description}</p>
-        </div>
-    </c:forEach>
+    <div class="row justify-content-evenly">
+        <c:forEach var="ad" items="${ads}">
+            <div class="card p-0" style="width: 18rem;">
+                <img src="${ad.imgURL}" class="card-img-top" alt="${ad.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${ad.title}</h5>
+                    <p class="card-text">${ad.description}</p>
+                    <a href="/product?id=${ad.id}" class="btn btn-primary">More Info</a>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
 </div>
-
-
-
-
-
 
 <jsp:include page="/WEB-INF/partials/footer.jsp" />
 
