@@ -16,7 +16,7 @@
                 </form>
             </div>
             <ul class="navbar-nav justify-content-end ms-5 md-lg-0">
-                <li class="nav-item"><a class="nav-link btn btn-primary" style="color: white;" href="${sessionScope.user == null ? "login" : "logout"}">${sessionScope.user == null ? "Log In" : "Log Out"}</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary" style="color: white;" href="${sessionScope.user == null ? "login" : "/logout"}">${sessionScope.user == null ? "Log In" : "Log Out"}</a></li>
                 <li class="nav-item"><a class="nav-link btn btn-primary ${sessionScope.user == null ? "d-none" : "ms-1"}" style="color: white;" href="${sessionScope.user == null ? "" : "/profile"}">${sessionScope.user.username}</a></li>
             </ul>
         </div>

@@ -1,5 +1,6 @@
 package com.codeup.adlister.dao;
 
+import java.util.ArrayList;
 import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
@@ -7,6 +8,7 @@ import com.mysql.cj.jdbc.Driver;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PropertyPermission;
 
 public class MySQLAdsDao implements Ads {
     private Connection connection = null;
@@ -163,4 +165,57 @@ public class MySQLAdsDao implements Ads {
         }
         return null;
     }
+    //Gil
+    public Long deleteListingAdCategories (Long ad_id) {
+        String query = "DELETE FROM ad_categories WHERE ad_id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, ad_id);
+            stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting the listing", e);
+        }
+        return null;
+    }
+    public Long insertAdCategory (Long ad_id, Long category_id) {
+        String query = "INSERT INTO ad_categories(ad_id, category_id) VALUES (?, ?)";
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, ad_id);
+            stmt.setLong(2, category_id);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error inserting the ad category", e);        }
+    }
+
+    public ArrayList<String> getCategoriesFromAdID (long ad_id){
+        String query = "SELECT category_id FROM ad_categories WHERE ad_id = ?";
+        PreparedStatement stmt = null;
+        try {
+            System.out.println(ad_id);
+            stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, ad_id);
+            stmt.executeQuery();
+            ResultSet rs = stmt.getGeneratedKeys();
+            System.out.println(rs.getLong("category_id"));
+            ArrayList<Long> categories = new ArrayList<>();
+            while (rs.next()) {
+                categories.add(rs.getLong("category_id"));
+                System.out.println(rs.getLong("category_id"));
+            }
+            ArrayList<String> category_strings = new ArrayList<>();
+            for (Long category_id : categories){
+                category_strings.add(DaoFactory.getCategoriesDao().nameFromId(category_id));
+            }
+            return category_strings;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error getting ad id", e);
+        }
+    }
+
 }

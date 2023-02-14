@@ -48,6 +48,25 @@ public class MySQLCategoriesDao implements Categories {
         }
     }
 
+
+    //Gil
+//    public Long insertCategoryAd (Long category_id) {
+//        String query = "INSERT INTO ad_categories(category_id) VALUES (?)";
+//        PreparedStatement stmt = null;
+//
+//        try {
+//            stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+//            stmt.setLong(1, category_id);
+//            stmt.executeUpdate();
+//            ResultSet rs = stmt.getGeneratedKeys();
+//            rs.next();
+//            return null;
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
     public static void main(String[] args) {
 
         System.out.println(DaoFactory.getCategoriesDao().idFromName("electronics"));

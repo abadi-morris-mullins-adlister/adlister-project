@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 @WebServlet(name = "controllers.CreateAdServlet", urlPatterns = "/ads/create")
 public class CreateAdServlet extends HttpServlet {
@@ -30,8 +32,15 @@ public class CreateAdServlet extends HttpServlet {
             request.getParameter("description"),
             request.getParameter("imgURL"),
             Double.parseDouble(request.getParameter("price"))
-        );
-        DaoFactory.getAdsDao().insert(ad);
+
+                );
+        long newAdId = DaoFactory.getAdsDao().insert(ad);
+        String[] category_id = request.getParameterValues("category");
+        for (String category : category_id){
+            Long insert_category = Long.valueOf(category);
+            DaoFactory.getAdsDao().insertAdCategory(newAdId, insert_category);
+        }
+//        DaoFactory.getCategoriesDao().insertCategoryAd(newAdId);
         response.sendRedirect("/ads");
     }
 }

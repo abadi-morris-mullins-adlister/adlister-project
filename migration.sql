@@ -39,6 +39,51 @@ CREATE TABLE category
     PRIMARY KEY (category_id)
 );
 
+SELECT category_id FROM ad_categories WHERE ad_id = 14;
+
+INSERT into category (name)
+VALUES ('antiques'),
+       ('appliances'),
+       ('arts-crafts'),
+       ('atv/utv/sno'),
+       ('autoparts'),
+       ('aviation'),
+       ('baby+kid'),
+       ('barter'),
+       ('beauty+hlth'),
+       ('bikes'),
+       ('boats'),
+       ('books'),
+       ('business'),
+       ('vehicles'),
+       ('cds/dvd/vhs'),
+       ('cellphones'),
+       ('clothes'),
+       ('collectibles'),
+       ('computers'),
+       ('electronics'),
+       ('farm_garden'),
+       ('free'),
+       ('furniture'),
+       ('garage_sale'),
+       ('general'),
+       ('heavy_equip'),
+       ('household'),
+       ('jewelry'),
+       ('materials'),
+       ('motorcycles'),
+       ('music instr'),
+       ('photo+video'),
+       ('rvs+camp'),
+       ('sporting'),
+       ('tickets'),
+       ('tools'),
+       ('toys+games'),
+       ('trailers'),
+       ('video gaming'),
+       ('wanted'),
+       ('wheels');
+
 CREATE TABLE ad_categories
 (
     ad_id       bigint UNSIGNED NOT NULL,
@@ -47,3 +92,5 @@ CREATE TABLE ad_categories
     FOREIGN KEY (ad_id) REFERENCES ads (id),
     FOREIGN KEY (category_id) REFERENCES category (category_id)
 );
+
+UPDATE users SET isAdmin = true WHERE id=1;

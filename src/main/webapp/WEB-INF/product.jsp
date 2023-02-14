@@ -23,6 +23,11 @@
             <p><strong>Date Listed: </strong><span id="date-created">${ad.date_created}</span></p>
             <p><strong>Price: </strong><span id="price">$${ad.price}0</span></p>
             <p><strong>Description: </strong><span id="description">${ad.description}</span></p>
+            <p><strong>Category:</strong><span id="category">
+            <c:forEach var="category" items="${categories}">
+                ${category}
+            </c:forEach>
+            </span></p>
         </div>
         <div class="card-header" style="border-top: 1px solid lightgrey;">
             Purchase Info

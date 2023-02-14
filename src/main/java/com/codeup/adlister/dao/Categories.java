@@ -6,4 +6,6 @@ public interface Categories {
 
     String nameFromId(long searchId);
 
+//    Long insertCategoryAd(Long category_id);
+
 }

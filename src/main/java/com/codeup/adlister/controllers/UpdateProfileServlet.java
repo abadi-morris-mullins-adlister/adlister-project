@@ -24,17 +24,25 @@ public class UpdateProfileServlet extends HttpServlet {
             response.sendRedirect("/login");
             return;
         }
-        request.getRequestDispatcher("/WEB-INF/edit_profile.jsp")
-                .forward(request, response);
+        if (((User) request.getSession().getAttribute("user")).isAdmin()){
+            User user = DaoFactory.getUsersDao().findByUserID(Long.parseLong(request.getParameter("id")));
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("/WEB-INF/edit_profile.jsp")
+                    .forward(request, response);
+        } else {
+            request.setAttribute("user", ((User) request.getSession().getAttribute("user")));
+            request.getRequestDispatcher("/WEB-INF/edit_profile.jsp")
+                    .forward(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String imgURL = request.getParameter("imgURL");
         String email = request.getParameter("email");
-        User user = (User) request.getSession().getAttribute("user");
+        Long user_id = Long.valueOf(request.getParameter("id"));
 
-        DaoFactory.getUsersDao().updateUser(username, imgURL, email, user);
+        DaoFactory.getUsersDao().updateUser(username, imgURL, email, user_id);
 
         response.sendRedirect("/profile");
     }

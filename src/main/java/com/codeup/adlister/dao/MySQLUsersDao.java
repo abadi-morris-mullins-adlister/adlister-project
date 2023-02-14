@@ -1,9 +1,12 @@
 package com.codeup.adlister.dao;
 
+import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.User;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySQLUsersDao implements Users {
     private Connection connection;
@@ -44,6 +47,17 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    public List<User> findAllUsers() {
+        String query = "SELECT * FROM users";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            return createUsersFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding a user by their username", e);
+        }
+    }
+
     @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password, imgURL, isAdmin) VALUES (?, ?, ?, ?, ?)";
@@ -77,19 +91,39 @@ public class MySQLUsersDao implements Users {
         );
     }
 
-    public Long updateUser(String username, String imgURL, String email, User user) {
+    private List<User> createUsersFromResults(ResultSet rs) throws SQLException {
+        List<User> users = new ArrayList<>();
+        while (rs.next()) {
+            users.add(extractUser(rs));
+        }
+        return users;
+    }
+
+    public Long updateUser(String username, String imgURL, String email, Long id) {
         String query = "UPDATE users SET username = ?, imgURL = ?, email = ? WHERE id = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1,username);
             stmt.setString(2, imgURL);
             stmt.setString(3,email);
-            stmt.setLong(4, user.getId());
+            stmt.setLong(4, id);
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
         } catch (SQLException e) {
             throw new RuntimeException("Error updating the user", e);
+        }
+        return null;
+    }
+
+    public Long deleteUser (Long id) {
+        String query = "DELETE FROM users WHERE id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, id);
+            stmt.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting the listing", e);
         }
         return null;
     }
