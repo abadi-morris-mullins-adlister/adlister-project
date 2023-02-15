@@ -53,7 +53,20 @@ public class MySQLUsersDao implements Users {
         try {
             stmt = connection.prepareStatement("SELECT * FROM users");
             ResultSet rs = stmt.executeQuery();
-            return createUsersFromResults(rs);
+            ArrayList<User> users = new ArrayList<>();
+            while (rs.next()) {
+                users.add(
+                        new User(
+                                rs.getLong("id"),
+                                rs.getString("username"),
+                                rs.getString("email"),
+                                rs.getString("password"),
+                                rs.getString("imgURL"),
+                                rs.getBoolean("isAdmin")
+                        )
+                );
+            }
+            return users;
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
         }

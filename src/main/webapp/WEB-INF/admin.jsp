@@ -16,7 +16,6 @@
             <div class="card-body bottom" style="height: 8rem;">
                 <h5 class="card-title">${user.username}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">${user.email}</h6>
-                <a href="/product?id=${user.id}" class="btn btn-primary disabled">More Info</a>
                 <a href="/edit_profile?id=${user.id}" class="btn btn-primary">Edit</a>
                 <a href="/delete_user?id=${user.id}" class="btn btn-danger">Delete</a>
             </div>

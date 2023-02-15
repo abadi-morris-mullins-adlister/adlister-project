@@ -30,7 +30,7 @@
         <a class="btn btn-primary" href="/edit_profile" style="color: white;">Edit Profile</a>
     </div>
     <h3 class="mt-3">Open Listings</h3>
-    <div class="d-flex">
+    <div class="d-flex flex-wrap justify-content-center">
         <c:forEach var="ad" items="${ads}">
             <div class="card p-0 me-1 mt-1 mb-1" style="width: 18rem; height: 25rem;">
                 <img src="${ad.imgURL}" class="card-img-top img-100" style="object-fit: fill; height: 17rem;" alt="${ad.title}">
@@ -39,7 +39,6 @@
                     <h6 class="card-subtitle mb-2 text-muted">$${ad.price}0</h6>
                     <a href="/product?id=${ad.id}" class="btn btn-primary">More Info</a>
                     <a href="/ads/edit?id=${ad.id}" class="btn btn-primary">Edit</a>
-
                 </div>
             </div>
         </c:forEach>

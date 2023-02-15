@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
     <div class="container-fluid align-items-center">
-        <a class="navbar-brand" href="/">Adlister</a>
+        <a class="navbar-brand" href="/">CodysList</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -16,7 +16,7 @@
                 </form>
             </div>
             <ul class="navbar-nav justify-content-end ms-5 md-lg-0">
-                <li class="nav-item"><a class="nav-link btn btn-primary" style="color: white;" href="${sessionScope.user == null ? "login" : "/logout"}">${sessionScope.user == null ? "Log In" : "Log Out"}</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary" style="color: white;" href="${sessionScope.user == null ? "/login" : "/logout"}">${sessionScope.user == null ? "Log In" : "Log Out"}</a></li>
                 <li class="nav-item"><a class="nav-link btn btn-primary ${sessionScope.user == null ? "d-none" : "ms-1"}" style="color: white;" href="${sessionScope.user == null ? "" : "/profile"}">${sessionScope.user.username}</a></li>
             </ul>
         </div>

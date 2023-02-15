@@ -28,4 +28,6 @@ public interface Ads {
     Long deleteListingAdCategories(Long ad_id);
     ArrayList<String> getCategoriesFromAdID (long ad_id);
 
+    ArrayList<Ad> getAdsFromCategory (Long category_id);
+
 }

@@ -216,4 +216,25 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    public ArrayList<Ad> getAdsFromCategory(Long category_id) {
+        String query = "SELECT * FROM ad_categories WHERE category_id = ?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, category_id);
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Long> ad_ids = new ArrayList<>();
+            while (rs.next()) {
+                ad_ids.add(rs.getLong("ad_id"));
+            }
+            ArrayList<Ad> ads = new ArrayList<>();
+            for (Long ad_id : ad_ids) {
+                ads.add(DaoFactory.getAdsDao().searchByAdId(ad_id));
+            }
+            return ads;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error getting ad id", e);
+        }
+    }
+
 }

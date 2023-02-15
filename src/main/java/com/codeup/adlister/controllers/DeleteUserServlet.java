@@ -29,10 +29,10 @@ public class DeleteUserServlet extends HttpServlet {
 
         List<Ad> ads = DaoFactory.getAdsDao().searchByUserId(Long.parseLong(request.getParameter("id")));
         for (Ad ad : ads){
+            DaoFactory.getAdsDao().deleteListingAdCategories(ad.getId());
             DaoFactory.getAdsDao().deleteListing(ad.getId());
         }
         DaoFactory.getUsersDao().deleteUser(Long.valueOf(request.getParameter("id")));
         response.sendRedirect("/profile");
     }
-
 }
