@@ -3,78 +3,104 @@
 <html>
 <head>
     <jsp:include page="partials/head.jsp">
-        <jsp:param name="title" value="Register For Our Site!" />
+        <jsp:param name="title" value="User Registration" />
     </jsp:include>
 </head>
 <body>
 
-<jsp:include page="partials/navbar.jsp" />
+    <jsp:include page="partials/navbar.jsp" />
 
-<div class="container">
-    <h1>User Registration</h1><hr>
-    <form action="/register" method="post" class="needs-validation" novalidate>
-        <div class="form-group mt-2">
-            <label for="username">Username</label>
-            <input id="username" name="username" class="field form-control form-validation" type="text" required>
-            <span class="small muted d-none" style="color: red;">Username taken, please choose another.</span>
-            <div id="username-feedback" class="invalid-feedback">
-                Username taken, please choose another.
+    <div class="container">
+        <h1>User Registration</h1><hr>
+        <form action="/register" method="post" class="needs-validation" novalidate>
+            <div class="form-group mt-2">
+                <label for="username">Username</label>
+                <input id="username" name="username" class="field form-control form-validation" type="text" required>
+                <span class="small muted d-none" style="color: red;">Username taken, please choose another.</span>
+                <div id="username-feedback" class="invalid-feedback">
+                    Username taken, please choose another.
+                </div>
             </div>
-        </div>
-        <div class="form-group mt-2">
-            <label for="email">Email</label>
-            <input id="email" name="email" class="field form-control" type="text" required>
-            <div id="email-feedback" class="invalid-feedback">
-                Enter a valid email address.
+            <div class="form-group mt-2">
+                <label for="email">Email</label>
+                <input id="email" name="email" class="field form-control" type="text" required>
+                <div id="email-feedback" class="invalid-feedback">
+                    Enter a valid email address.
+                </div>
             </div>
-        </div>
-        <div class="form-group mt-2">
-            <label for="password">Password</label>
-            <input id="password" name="password" class="field form-control" type="password" required>
-        </div>
-        <div class="form-group mt-2">
-            <label for="confirm_password">Confirm Password</label>
-            <input id="confirm_password" name="confirm_password" class="form-control" type="password" required>
-            <div id="password-feedback" class="invalid-feedback">
-                Passwords do not match, please try again.
+            <div class="form-group mt-2">
+                <label for="password">Password</label>
+                <input id="password" name="password" class="field form-control" type="password" required>
             </div>
-        </div>
-        <input type="submit" id="submit" class="btn btn-primary btn-block mt-2">
-    </form>
-</div>
+            <div class="form-group mt-2">
+                <label for="confirm_password">Confirm Password</label>
+                <input id="confirm_password" name="confirm_password" class="form-control" type="password" required>
+                <div id="password-feedback" class="invalid-feedback">
+                    Passwords do not match, please try again.
+                </div>
+            </div>
+            <input type="submit" id="submit" class="btn btn-primary btn-block mt-2">
+        </form>
+    </div>
 
-<script>
-    (() => {
-        'use strict'
-        // Bootstrap Form Validation
-        const forms = document.querySelectorAll('.needs-validation')
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
+    <script>
+        (() => {
+            'use strict'
+            // Bootstrap Form Validation
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+            // Username Validation
+            // Password Validation
+            let password = document.getElementById("password")
+                , confirm_password = document.getElementById("confirm_password");
+            function validatePassword(){
+                if(password.value != confirm_password.value) {
+                    confirm_password.setCustomValidity("Passwords Don't Match");
+                } else {
+                    confirm_password.setCustomValidity('');
                 }
-
-                form.classList.add('was-validated')
-            }, false)
-        })
-        // Username Validation
-        // Password Validation
-        let password = document.getElementById("password")
-            , confirm_password = document.getElementById("confirm_password");
-        function validatePassword(){
-            if(password.value != confirm_password.value) {
-                confirm_password.setCustomValidity("Passwords Don't Match");
-            } else {
-                confirm_password.setCustomValidity('');
             }
-        }
-        password.onchange = validatePassword;
-        confirm_password.onkeyup = validatePassword;
-    })()
-</script>
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
 
-<jsp:include page="/WEB-INF/partials/footer.jsp" />
+            let usernames = [];
+            <c:forEach var="user" items="${users}">
+            usernames.push('${user.username}')
+            </c:forEach>
+            console.log(usernames);
+            let username_id = document.querySelector('#username');
+            let ifInvalid = false;
+            username_id.addEventListener('keyup', event => {
+                if (ifInvalid) {
+                    username_id.classList.remove('is-invalid')
+                    ifInvalid = false;
+                }
+                let textValue = document.querySelector("#username").value;
+                for (let i = 0 ; i < usernames.length; i++){
+                    if (textValue === usernames[i]){
+                        ifInvalid = true;
+                        break;
+                    } else {
+                        ifInvalid = false;
+                    }
+                }
+                if (ifInvalid) {
+                    username_id.classList.add('is-invalid');
+                }
+            })
+        })()
+    </script>
+
+    <jsp:include page="/WEB-INF/partials/footer.jsp" />
 
 </body>
 </html>

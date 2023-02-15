@@ -24,6 +24,7 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    //    Finds a user by their username.
     @Override
     public User findByUsername(String username) {
         String query = "SELECT * FROM users WHERE username = ? LIMIT 1";
@@ -35,7 +36,7 @@ public class MySQLUsersDao implements Users {
             throw new RuntimeException("Error finding a user by their username", e);
         }
     }
-
+    // Finds a user by their ID
     public User findByUserID(long userID) {
         String query = "SELECT * FROM users WHERE id = ? LIMIT 1";
         try {
@@ -47,6 +48,7 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    //    Retrieves all users from the users table.
     @Override
     public List<User> findAllUsers() {
         PreparedStatement stmt = null;
@@ -72,6 +74,7 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    //    Inserts a new user into the users table.
     @Override
     public Long insert(User user) {
         String query = "INSERT INTO users(username, email, password, imgURL, isAdmin) VALUES (?, ?, ?, ?, ?)";
@@ -91,6 +94,7 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    //extracts user's information such as username, email, etc.
     private User extractUser(ResultSet rs) throws SQLException {
         if (!rs.next()) {
             return null;
@@ -105,6 +109,8 @@ public class MySQLUsersDao implements Users {
         );
     }
 
+
+
     private List<User> createUsersFromResults(ResultSet rs) throws SQLException {
         List<User> users = new ArrayList<>();
         while (rs.next()) {
@@ -113,6 +119,7 @@ public class MySQLUsersDao implements Users {
         return users;
     }
 
+    // Updates a user in the users table.
     public Long updateUser(String username, String imgURL, String email, Long id) {
         String query = "UPDATE users SET username = ?, imgURL = ?, email = ? WHERE id = ?";
         try {
@@ -130,6 +137,7 @@ public class MySQLUsersDao implements Users {
         return null;
     }
 
+    //deletes a user from the user table.
     public Long deleteUser(Long id) {
         String query = "DELETE FROM users WHERE id = ?";
         try {

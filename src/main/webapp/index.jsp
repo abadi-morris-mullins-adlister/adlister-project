@@ -10,6 +10,7 @@
 <body>
 
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
+
     <div class="container">
         <h1 class="text-center my-5">CodysList</h1>
         <div class="row">

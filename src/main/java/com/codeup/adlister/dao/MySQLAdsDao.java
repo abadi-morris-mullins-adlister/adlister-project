@@ -13,19 +13,21 @@ import java.util.PropertyPermission;
 public class MySQLAdsDao implements Ads {
     private Connection connection = null;
 
+    //    A constructor that takes a Config object and connects to the database using the URL, user, and password provided in the Config object.
     public MySQLAdsDao(Config config) {
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
-                config.getUrl(),
-                config.getUser(),
-                config.getPassword()
+                    config.getUrl(),
+                    config.getUser(),
+                    config.getPassword()
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);
         }
     }
 
+    //    Returns a list of all ads in the database.
     @Override
     public List<Ad> all() {
         PreparedStatement stmt = null;
@@ -38,6 +40,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    //    Returns a list of ads that contain the specified search term in their title or description.
     @Override
     public List<Ad> searchByTerm(String searchTerm) {
         try {
@@ -56,6 +59,8 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+    //    Returns a list of ads posted by the specified user.
     @Override
     public List<Ad> searchByUserId(long userID) {
         try {
@@ -72,6 +77,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    //    Returns the ad with the specified ID.
     public Ad searchByAdId(long adID) {
         try {
             String searchQuery = "SELECT * FROM ads where id = ?";
@@ -96,6 +102,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    //    Inserts a new ad into the database and returns its ID.
     @Override
     public Long insert(Ad ad) {
         try {
@@ -115,19 +122,19 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error creating a new ad.", e);
         }
     }
-
+    //extracts the information from the ad such as title, description, etc.
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
-            rs.getLong("id"),
-            rs.getLong("user_id"),
-            rs.getString("title"),
-            rs.getString("description"),
-            rs.getString("imgURL"),
-            rs.getDate("date_created"),
-            rs.getDouble("price")
+                rs.getLong("id"),
+                rs.getLong("user_id"),
+                rs.getString("title"),
+                rs.getString("description"),
+                rs.getString("imgURL"),
+                rs.getDate("date_created"),
+                rs.getDouble("price")
         );
     }
-
+    //Creates the ads based on results returned by the search query
     private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
         List<Ad> ads = new ArrayList<>();
         while (rs.next()) {
@@ -136,6 +143,7 @@ public class MySQLAdsDao implements Ads {
         return ads;
     }
 
+    //    Updates the specified ad with the new values for title, description, imgURL, and price.
     public Long updateListing(String title, String description, String imgURL, double price, Long id) {
         String query = "UPDATE ads SET title = ?, description = ?, imgURL = ?, price = ? WHERE id = ?";
         try {
@@ -154,6 +162,7 @@ public class MySQLAdsDao implements Ads {
         return null;
     }
 
+    //    Deletes the ad with the specified ID.
     public Long deleteListing (Long id) {
         String query = "DELETE FROM ads WHERE id = ?";
         try {
@@ -165,7 +174,7 @@ public class MySQLAdsDao implements Ads {
         }
         return null;
     }
-    //Gil
+    //    Deletes all category assignments for the ad with the specified ID.
     public Long deleteListingAdCategories (Long ad_id) {
         String query = "DELETE FROM ad_categories WHERE ad_id = ?";
         try {
@@ -177,6 +186,7 @@ public class MySQLAdsDao implements Ads {
         }
         return null;
     }
+    //    Assigns the category with the specified ID to the ad with the specified ID.
     public Long insertAdCategory (Long ad_id, Long category_id) {
         String query = "INSERT INTO ad_categories(ad_id, category_id) VALUES (?, ?)";
         PreparedStatement stmt = null;
@@ -193,6 +203,7 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error inserting the ad category", e);        }
     }
 
+    //Used for the associative table to retrieve the category from the Ad id.
     public ArrayList<String> getCategoriesFromAdID (long ad_id){
         String query = "SELECT * FROM ad_categories WHERE ad_id = ?";
         PreparedStatement stmt = null;
@@ -216,6 +227,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    //Used for the associative table to retrieve the ad id from the category.
     public ArrayList<Ad> getAdsFromCategory(Long category_id) {
         String query = "SELECT * FROM ad_categories WHERE category_id = ?";
         PreparedStatement stmt = null;
