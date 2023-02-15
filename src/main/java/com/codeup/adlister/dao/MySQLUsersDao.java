@@ -47,14 +47,15 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    @Override
     public List<User> findAllUsers() {
-        String query = "SELECT * FROM users";
+        PreparedStatement stmt = null;
         try {
-            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt = connection.prepareStatement("SELECT * FROM users");
             ResultSet rs = stmt.executeQuery();
             return createUsersFromResults(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error finding a user by their username", e);
+            throw new RuntimeException("Error retrieving all ads.", e);
         }
     }
 
@@ -103,9 +104,9 @@ public class MySQLUsersDao implements Users {
         String query = "UPDATE users SET username = ?, imgURL = ?, email = ? WHERE id = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1,username);
+            stmt.setString(1, username);
             stmt.setString(2, imgURL);
-            stmt.setString(3,email);
+            stmt.setString(3, email);
             stmt.setLong(4, id);
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
@@ -116,7 +117,7 @@ public class MySQLUsersDao implements Users {
         return null;
     }
 
-    public Long deleteUser (Long id) {
+    public Long deleteUser(Long id) {
         String query = "DELETE FROM users WHERE id = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);

@@ -39,7 +39,16 @@ CREATE TABLE category
     PRIMARY KEY (category_id)
 );
 
-SELECT category_id FROM ad_categories WHERE ad_id = 14;
+CREATE TABLE ad_categories
+(
+    ad_id       bigint UNSIGNED NOT NULL,
+    category_id bigint UNSIGNED NOT NULL,
+    PRIMARY KEY (ad_id, category_id),
+    FOREIGN KEY (ad_id) REFERENCES ads (id),
+    FOREIGN KEY (category_id) REFERENCES category (category_id)
+);
+
+# SELECT category_id FROM ad_categories WHERE ad_id = 14;
 
 INSERT into category (name)
 VALUES ('antiques'),
@@ -84,13 +93,6 @@ VALUES ('antiques'),
        ('wanted'),
        ('wheels');
 
-CREATE TABLE ad_categories
-(
-    ad_id       bigint UNSIGNED NOT NULL,
-    category_id bigint UNSIGNED NOT NULL,
-    PRIMARY KEY (ad_id, category_id),
-    FOREIGN KEY (ad_id) REFERENCES ads (id),
-    FOREIGN KEY (category_id) REFERENCES category (category_id)
-);
+UPDATE users SET isAdmin = true WHERE id = 3;
 
-UPDATE users SET isAdmin = true WHERE id=1;
+SELECT * from users;

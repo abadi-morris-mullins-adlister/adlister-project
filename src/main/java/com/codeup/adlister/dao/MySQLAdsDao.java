@@ -194,19 +194,17 @@ public class MySQLAdsDao implements Ads {
     }
 
     public ArrayList<String> getCategoriesFromAdID (long ad_id){
-        String query = "SELECT category_id FROM ad_categories WHERE ad_id = ?";
+        String query = "SELECT * FROM ad_categories WHERE ad_id = ?";
         PreparedStatement stmt = null;
         try {
             System.out.println(ad_id);
-            stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            System.out.println(query);
+            stmt = connection.prepareStatement(query);
             stmt.setLong(1, ad_id);
-            stmt.executeQuery();
-            ResultSet rs = stmt.getGeneratedKeys();
-            System.out.println(rs.getLong("category_id"));
+            ResultSet rs = stmt.executeQuery();
             ArrayList<Long> categories = new ArrayList<>();
             while (rs.next()) {
                 categories.add(rs.getLong("category_id"));
-                System.out.println(rs.getLong("category_id"));
             }
             ArrayList<String> category_strings = new ArrayList<>();
             for (Long category_id : categories){

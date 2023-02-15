@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "controllers.ViewProfileServlet", urlPatterns = "/profile")
 public class ViewProfileServlet extends HttpServlet {
@@ -21,7 +22,8 @@ public class ViewProfileServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         request.setAttribute("ads", DaoFactory.getAdsDao().searchByUserId(user.getId()));
         if (user.isAdmin()) {
-            request.setAttribute("users", DaoFactory.getUsersDao().findAllUsers());
+            List<User> users = DaoFactory.getUsersDao().findAllUsers();
+            request.setAttribute("users", users);
             request.setAttribute("ads", DaoFactory.getAdsDao().all());
             request.getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
         } else {
