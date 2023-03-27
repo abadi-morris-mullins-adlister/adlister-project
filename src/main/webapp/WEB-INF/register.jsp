@@ -10,7 +10,7 @@
 
     <jsp:include page="partials/navbar.jsp" />
 
-    <div class="container">
+    <div class="row d-flex container">
         <h1>User Registration</h1><hr>
         <form action="/register" method="post" class="needs-validation" novalidate>
             <div class="form-group mt-2">
